@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Retro 90s UI - Read Employee</title>
+  <link rel="stylesheet" href="./css/read.css">
+</head>
+<body>
+  <div class="light-blue-window">
+    <div class="black-window">
+      <div class="red-overlay">
+        <h2>Read Employee Record</h2>
+        <p>by: Benjamin Liles</p>
+
+        <form>
+          <label>Select Employee File:
+            <input type="file" id="loadFile" accept=".txt">
+          </label>
+        </form>
+
+        <pre id="fileOutput"></pre>
+
+        <a href="index.html" class="menu-link">&larr; Return to Main Menu</a>
+      </div>
+      <div class="footer">
+        <p>&copy; 2025 Benjamin Liles</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('loadFile').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('fileOutput').textContent = e.target.result;
+      };
+      reader.readAsText(file);
+    });
+  </script>
+</body>
+</html>

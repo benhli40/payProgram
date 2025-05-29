@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Retro 90s UI - Employee Pay</title>
+  <link rel="stylesheet" href="./css/pay.css">
+</head>
+<body>
+  <div class="light-blue-window">
+    <div class="black-window">
+      <div class="red-overlay">
+        <h2>Employee Pay Calculator</h2>
+        <p>by: Benjamin Liles</p>
+
+        <form id="payForm" onsubmit="event.preventDefault(); calculatePay();">
+          <label>First Name: <input type="text" id="fName" required></label><br>
+          <label>Last Name: <input type="text" id="lName" required></label><br>
+
+          <label>Employee Type:
+            <select id="empType">
+              <option value="hourly">Hourly</option>
+              <option value="salaried">Salaried</option>
+            </select>
+          </label><br>
+
+          <label>Payrate: <input type="number" id="payrate" step="0.01" required></label><br>
+          <label>Hours Worked: <input type="number" id="hoursWorked" step="0.1" value="40"></label><br><br>
+
+          <button type="submit">Calculate Pay</button>
+        </form>
+
+        <pre id="payOutput"></pre>
+
+        <a href="index.html" class="menu-link">&larr; Return to Main Menu</a>
+      </div>
+      <div class="footer">
+        <p>&copy; 2025 Benjamin Liles</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function calculatePay() {
+      const fName = document.getElementById("fName").value.trim();
+      const lName = document.getElementById("lName").value.trim();
+      const empType = document.getElementById("empType").value;
+      const payrate = parseFloat(document.getElementById("payrate").value);
+      const hours = parseFloat(document.getElementById("hoursWorked").value) || 0;
+
+      const grossPay = empType === "salaried" ? payrate : payrate * hours;
+      const taxes = grossPay * 0.0765;
+      const netPay = grossPay - taxes;
+
+      const output = `
+Employee: ${fName} ${lName}
+Employee Type: ${empType.charAt(0).toUpperCase() + empType.slice(1)}
+Payrate: $${payrate.toFixed(2)}
+Hours Worked: ${empType === 'salaried' ? 'N/A' : hours}
+
+Gross Pay: $${grossPay.toFixed(2)}
+Taxes (7.65%): $${taxes.toFixed(2)}
+Net Pay: $${netPay.toFixed(2)}
+`;
+
+      document.getElementById("payOutput").textContent = output;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Retro 90s UI - Create Employee</title>
+  <link rel="stylesheet" href="./css/style2.css">
+</head>
+<body>
+  <div class="light-blue-window">
+    <div class="black-window">
+      <div class="red-overlay">
+        <div id="create" class="section">
+          <form id="employeeForm" onsubmit="event.preventDefault(); saveEmployeeTxt();">
+            <h3>Create New Employee</h3>
+            
+            <label>First Name: <input type="text" id="fName" required></label><br>
+            <label>Last Name: <input type="text" id="lName" required></label><br>
+            <label>Date of Birth: <input type="text" id="dob" placeholder="e.g. September 28, 1973"></label><br>
+            <label>SSN: <input type="password" id="ssn" placeholder="xxx-xx-xxxx"></label><br>
+
+            <h4>Address</h4>
+            <label>Street: <input type="text" id="street"></label><br>
+            <label>Apt/Suite: <input type="text" id="aptSuite"></label><br>
+            <label>City: <input type="text" id="city"></label><br>
+            <label>State: <input type="text" id="state"></label><br>
+            <label>ZIP Code: <input type="text" id="zip"></label><br>
+            <label>Email: <input type="email" id="email"></label><br>
+            <label>Phone: <input type="tel" id="phone"></label><br>
+
+            <h4>Pay Info</h4>
+            <label>Payrate: <input type="number" id="payrate" step="0.01" required></label><br>
+            <label>Employee Type:
+              <select id="empType">
+                <option value="hourly">Hourly</option>
+                <option value="salaried">Salaried</option>
+              </select>
+            </label><br>
+            <label>Hours Worked (Weekly): <input type="number" id="hoursWorked" step="0.1" value="40"></label><br><br>
+
+            <button type="submit">Save Employee</button>
+          </form>
+
+          <a href="index.html" class="menu-link">← Return to Main Menu</a>
+        </div>
+      </div>
+      <div class="footer">
+        <p>© 2025 Benjamin Liles</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function saveEmployeeTxt() {
+      const fName = document.getElementById("fName").value.trim();
+      const lName = document.getElementById("lName").value.trim();
+      
+      const fileName = `employees/${fName[0].toLowerCase()}${lName.toLowerCase()}.txt`;
+
+      const empType = document.getElementById("empType").value;
+      const hoursWorked = parseFloat(document.getElementById("hoursWorked").value) || 0;
+      const payrate = parseFloat(document.getElementById("payrate").value);
+
+      const grossPay = empType === "salaried" ? payrate : payrate * hoursWorked;
+      const taxes = grossPay * 0.0765;
+      const netPay = grossPay - taxes;
+
+      const content = `
+        Name: ${fName} ${lName}
+        DOB: ${document.getElementById("dob").value}
+        SSN: Encrypted
+
+        Address:
+          ${document.getElementById("street").value}
+          Apt/Suite: ${document.getElementById("aptSuite").value}
+          City: ${document.getElementById("city").value}
+          State: ${document.getElementById("state").value}
+          ZIP: ${document.getElementById("zip").value}
+          Email: ${document.getElementById("email").value}
+          Phone: ${document.getElementById("phone").value}
+
+        Payrate: $${payrate.toFixed(2)}
+        Employee Type: ${empType}
+        Hours Worked: ${empType === "salaried" ? "N/A" : hoursWorked}
+        Gross Pay: $${grossPay.toFixed(2)}
+        Taxes (7.65%): $${taxes.toFixed(2)}
+        Net Pay: $${netPay.toFixed(2)}
+        `.trim();
+
+              const blob = new Blob([content], { type: "text/plain" });
+              const a = document.createElement("a");
+              a.href = URL.createObjectURL(blob);
+              a.download = fileName;
+              a.click();
+              URL.revokeObjectURL(a.href);
+    }
+  </script>
+</body>
+</html>

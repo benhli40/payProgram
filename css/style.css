@@ -1,0 +1,70 @@
+body {
+  background: lightblue;;
+  font-family: 'Courier New', monospace;
+  margin: 0;
+  padding: 2rem;
+}
+
+/* Bottom-most window */
+.light-blue-window {
+  background-color: lightblue;
+  padding: 2rem;
+  width: 500px;
+  height: 350px;
+  position: relative;
+  margin: 0 auto;
+  box-shadow: 0 0 0 2px lightblue;
+}
+
+/* Stacked black window */
+.black-window {
+  background-color: black;
+  width: 450px;
+  height: 320px;
+  position: absolute;
+  top: 70px;
+  left: 70px;
+  box-shadow: 0 0 0 2px black;
+}
+
+/* Red overlay, offset on top of black */
+.red-overlay {
+  background-color: red;
+  color: white;
+  width: 450px;
+  height: 320px;
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.menu {
+  margin-bottom: 1rem;
+}
+
+.menu-item {
+  display: block;
+  margin: 0.5rem 0;
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  border-left: 4px solid transparent;
+  padding-left: 8px;
+}
+
+.menu-item:hover {
+  border-left: 4px solid yellow;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.footer {
+  position: absolute;
+  bottom:-7px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 0.75rem;
+  padding: 0.5rem 0;
+}
